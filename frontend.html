@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Load Balancer Client</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            width: 420px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #1e40af;
+        }
+        .response-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 10px;
+            min-height: 80px;
+            border: 1px solid #e5e7eb;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Load Balancer Client</h1>
+        <p>Click the button to send a request to the load balancer.</p>
+
+        <button onclick="sendRequest()">Send Request</button>
+
+        <div class="response-box" id="responseBox">Waiting for response...</div>
+    </div>
+
+    <script>
+        function sendRequest() {
+            const box = document.getElementById("responseBox");
+            box.textContent = "Sending request...";
+
+            fetch("http://localhost:5555")
+                .then(res => res.text())
+                .then(text => {
+                    box.textContent = text;
+                })
+                .catch(err => {
+                    box.textContent = "Error: Could not connect to Load Balancer";
+                });
+        }
+    </script>
+</body>
+</html>
